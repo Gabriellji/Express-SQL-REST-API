@@ -51,4 +51,31 @@ describe('Test routes', () => {
                 done();
             });
     })
+
+    it('POST /anime - OK (fields provided)', (done) => {
+        request(app)
+        .post('/bookmarks')
+          .send(testAnime)
+          .expect(201)
+          .expect('Content-Type', /json/)
+          .then(response => {
+            const expected = { id: expect.any(Number), ...testAnime };
+            expect(response.body).toEqual(expected);
+            done();
+          })
+          .catch(done);
+    })
+
+    it('POST /anime - error (fields missing) ', (done) => {
+        request(app)
+            .post('/anime')
+            .send({})
+            .expect(422)
+            .expect('Content-Type', /json/)
+            .then(response => {
+                const expected = { error: 'required field(s) missing' };
+                expect(response.body).toEqual(expected);
+                done();
+            });
+    });
 })
