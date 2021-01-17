@@ -95,7 +95,7 @@ router.get('/anime/sort/:sort', (req, res) => {
         if (err) {
             if (req.params.sort !== 'desc' || req.params.sort !== 'asc') {
                 res.status(422).json({
-                    error: 'required parameters of sort: desc or asc'
+                    error: 'Required parameters of sort: desc or asc'
                 });
             }
             res.status(500).json({
@@ -166,7 +166,7 @@ router.put("/anime/:id", (req, res) => {
 router.put('/anime/list/:id', (req, res) => {
     const animeId = req.params.id;
     const sql = "UPDATE anime_list SET is_checked = !is_checked WHERE id = ?";
-    connection.query(sql, animeId, (err, results) => {
+    connection.query(sql, [animeId], (err, results) => {
         if (err) {
             res.status(500).json({
                 error: err.message,
@@ -184,6 +184,20 @@ router.put('/anime/list/:id', (req, res) => {
             const insertedAnime = records[0];
             return res.status(200).json(insertedAnime);
         });
+    })
+})
+
+router.delete('/anime/:id', (req, res) => {
+    const animeId = req.params.id;
+    const sql = "DELETE FROM anime_list WHERE id = ?";
+    connection.query(sql, [animeId], (err, results) => {
+        if (err) {
+            res.status(500).json({
+                error: err.message,
+                sql: err.sql,
+            });
+        }
+        return res.status(200).json({ message: 'Resource deleted successfully'})
     })
 })
 
