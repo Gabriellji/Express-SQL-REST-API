@@ -64,7 +64,7 @@ router.get('/search', (req, res) => {
                     return res.status(200).json(results);
                 }
             }
-          );
+        );
     } else if (year) {
         connection.query(
             `SELECT * from anime_list WHERE year > '${year}'`,
@@ -84,9 +84,28 @@ router.get('/search', (req, res) => {
                     return res.status(200).json(results);
                 }
             }
-          );
+        );
     }
-    
+    res.status(400).json({ error: 'Invalid request' })
+})
+
+router.get('/anime/sort/:sort', (req, res) => {
+    const sql = `SELECT * FROM anime_list ORDER BY year ${req.params.sort}`;
+    connection.query(sql, (err, results) => {
+        if (err) {
+            if (req.params.sort !== 'desc' || req.params.sort !== 'asc') {
+                res.status(422).json({
+                    error: 'required parameters of sort: desc or asc'
+                });
+            }
+            res.status(500).json({
+                error: err.message,
+                sql: err.sql,
+            });
+        }
+        return res.status(200).json(results);
+    })
+
 })
 
 router.post('/anime', (req, res) => {
