@@ -39,7 +39,7 @@ Second, **edit** `.env`. **You have to replace the value behind `DB_PASS=`** wit
 
 **How to use it**
 
-**GET** Get all results
+- **GET** Get all results
 
 ```
 /anime
@@ -47,7 +47,7 @@ Second, **edit** `.env`. **You have to replace the value behind `DB_PASS=`** wit
 
 It will return all list of objects
 
-**GET** Get a single item
+- **GET** Get a single item
 
 ```
 /anime/1
@@ -55,7 +55,7 @@ It will return all list of objects
 
 It will return you an object with sent id.
 
-**GET** Sort items (i.e. ascending, descending)
+- **GET** Sort items (i.e. ascending, descending)
 
 ```
 /anime/sort/desc
@@ -64,7 +64,7 @@ It will return you an object with sent id.
 You can use with 'desc' or 'asc'.
 It will return you sorted list of object.
 
-**GET** A filter for data that is greater than... (e.g. date greater than 2000-10-10)
+- **GET** A filter for data that is greater than... (e.g. date greater than 2000-10-10)
 
 ```
 /search?year=2000-10-10
@@ -72,7 +72,7 @@ It will return you sorted list of object.
 
 It will return you sorted list of object.
 
-**GET** A filter for data that contains... (e.g. title containing the string 'host')
+- **GET** A filter for data that contains... (e.g. title containing the string 'host')
 
 ```
 /search?title=host
@@ -80,7 +80,7 @@ It will return you sorted list of object.
 
 It will return you list of object that contains passed string.
 
-**POST** Add new item
+- **POST** Add new item
 
 ```
 /anime
@@ -88,7 +88,7 @@ It will return you list of object that contains passed string.
 
 it will return you an object with a new id.*Title* feild is required.
 
-**PUT** Update an item
+- **PUT** Update an item
 
 ```
 /anime/1
@@ -96,7 +96,7 @@ it will return you an object with a new id.*Title* feild is required.
 
 It will return you updated object with sent id.
 
-**PUT** Toggle a Boolean value (is_checked to TRUE/FALSE)
+- **PUT** Toggle a Boolean value (is_checked to TRUE/FALSE)
 
 ```
 /anime/list/1
@@ -104,7 +104,7 @@ It will return you updated object with sent id.
 
 It will return you updated object with sent id.
 
-**DELETE** Delete an item
+- **DELETE** Delete an item
 
 ```
 /anime/1
@@ -112,7 +112,7 @@ It will return you updated object with sent id.
 
 The product will be deleted.
 
-**DELETE** Delete all items with value is_checked = FALSE
+- **DELETE** Delete all items with value is_checked = FALSE
 
 ```
 /anime
