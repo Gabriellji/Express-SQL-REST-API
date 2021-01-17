@@ -18,7 +18,7 @@ router.delete('/anime/:id', (req, res) => {
 })
 
 router.delete('/anime', (req, res) => {
-    const sql = "TRUNCATE anime_list";
+    const sql = "DELETE FROM anime_list WHERE is_checked = 0";
     connection.query(sql, (err, results) => {
         if (err) {
             res.status(500).json({
@@ -26,7 +26,18 @@ router.delete('/anime', (req, res) => {
                 sql: err.sql,
             });
         }
-        return res.status(200).json({ message: 'All resources deleted successfully'})
+        const sql2 = 'SELECT * FROM anime_list';
+        return connection.query(sql2, (err2, records) => {
+            if (err2) {
+                res.status(500).json({
+                    error: err2.message,
+                    sql: err2.sql
+                });
+            }
+            const updatedList = records;
+            return res.status(200).json(updatedList);
+        });
+        // return res.status(200).json({ message: 'All resources deleted successfully'})
     })
 })
 
