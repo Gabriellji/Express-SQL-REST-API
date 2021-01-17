@@ -44,25 +44,49 @@ router.get('/anime/:id', (req, res) => {
 })
 
 router.get('/search', (req, res) => {
-    connection.query(
-        `SELECT * from anime_list WHERE title LIKE '%${req.query.title}%'`,
-        // [req.query.title],
-        (err, results) => {
-            if (err) {
-                res.status(500).json({
-                    error: err.message,
-                    sql: err.sql,
-                });
-            } else {
-                if (!results.length) {
-                    res.status(404).json({
-                        error: 'Anime not found'
+    const { title, year } = req.query;
+    if (title) {
+        connection.query(
+            `SELECT * from anime_list WHERE title LIKE '%${title}%'`,
+            // [req.query.title],
+            (err, results) => {
+                if (err) {
+                    res.status(500).json({
+                        error: err.message,
+                        sql: err.sql,
                     });
+                } else {
+                    if (!results.length) {
+                        res.status(404).json({
+                            error: 'Anime not found'
+                        });
+                    }
+                    return res.status(200).json(results);
                 }
-                return res.status(200).json(results);
             }
-        }
-      );
+          );
+    } else if (year) {
+        connection.query(
+            `SELECT * from anime_list WHERE year > '${year}'`,
+            // [req.query.title],
+            (err, results) => {
+                if (err) {
+                    res.status(500).json({
+                        error: err.message,
+                        sql: err.sql,
+                    });
+                } else {
+                    if (!results.length) {
+                        res.status(404).json({
+                            error: 'Anime not found'
+                        });
+                    }
+                    return res.status(200).json(results);
+                }
+            }
+          );
+    }
+    
 })
 
 router.post('/anime', (req, res) => {
